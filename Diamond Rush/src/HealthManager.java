@@ -8,36 +8,45 @@ public class HealthManager {
     private JLabel playerLabel; // Oyuncunun JLabel referansı
     private boolean invincible; // Geçici olarak hasar alınamaz durumu
     private Timer invincibilityTimer; // Çarpışma sonrası koruma süresi
+    private PlayerMovement playerMovement;
 
-    public HealthManager(int initialHealth, int initialX, int initialY, JLabel playerLabel) {
+    public HealthManager(int initialHealth, int initialX, int initialY, JLabel playerLabel,PlayerMovement playerMovement) {
         this.health = initialHealth;
         this.initialX = initialX;
         this.initialY = initialY;
         this.playerLabel = playerLabel;
         this.invincible = false;
+        this.playerMovement = playerMovement;
     }
 
-    // Oyuncunun canını azalt
     public void reduceHealth() {
         if (invincible) {
             return; // Eğer geçici olarak hasar alınamıyorsa, işlem yapma
         }
-
+    
         health--;
         System.out.println("Player health: " + health);
-
+    
         if (health <= 0) {
             System.out.println("Player is dead!");
             restartGame();
         } else {
             activateInvincibility(); // Çarpışma sonrası koruma başlat
-            resetPlayerPosition();
+            resetPlayerPosition();   // Pozisyon sıfırlama
         }
     }
+    
+    
 
     // Oyuncunun başlangıç pozisyonuna döndür
     public void resetPlayerPosition() {
         playerLabel.setBounds(initialX, initialY, playerLabel.getWidth(), playerLabel.getHeight());
+        
+        // PlayerMovement referansını ekleyin (World sınıfında)
+        if (playerMovement != null) {
+            playerMovement.resetToInitialPosition(initialX, initialY);
+        }
+        
         playerLabel.getParent().repaint();
     }
 
@@ -66,4 +75,9 @@ public class HealthManager {
     public int getHealth() {
         return health;
     }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+    
 }
