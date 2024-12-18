@@ -30,7 +30,15 @@ public class PlayerMovement extends KeyAdapter {
         movementTimer = new Timer(10, e -> moveSmoothly());
         movementTimer.start();
     }
-
+    // Oyuncuyu başlangıç konumuna geri götüren metodu değiştirin
+    public void resetToInitialPosition(int initialX, int initialY) {
+        // Hedef pozisyonu başlangıç konumuna ayarlayın
+        this.targetX = initialX;
+        this.targetY = initialY;
+        
+        // Aktif tuşları temizleyin ki hareket engellensin
+        activeKeys.clear();
+    }
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -94,4 +102,11 @@ public class PlayerMovement extends KeyAdapter {
         // Oyuncunun pozisyonunu güncelle
         player.setLocation(currentX, currentY);
     }
+    public void resetTarget() {
+    targetX = player.getX();
+    targetY = player.getY();
+}
+
+
+    
 }
