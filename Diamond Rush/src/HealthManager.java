@@ -1,4 +1,5 @@
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class HealthManager {
@@ -10,7 +11,7 @@ public class HealthManager {
     private Timer invincibilityTimer; // Çarpışma sonrası koruma süresi
     private PlayerMovement playerMovement;
 
-    public HealthManager(int initialHealth, int initialX, int initialY, JLabel playerLabel,PlayerMovement playerMovement) {
+    public HealthManager(int initialHealth, int initialX, int initialY, JLabel playerLabel, PlayerMovement playerMovement) {
         this.health = initialHealth;
         this.initialX = initialX;
         this.initialY = initialY;
@@ -23,10 +24,10 @@ public class HealthManager {
         if (invincible) {
             return; // Eğer geçici olarak hasar alınamıyorsa, işlem yapma
         }
-    
+
         health--;
         System.out.println("Player health: " + health);
-    
+
         if (health <= 0) {
             System.out.println("Player is dead!");
             restartGame();
@@ -35,18 +36,16 @@ public class HealthManager {
             resetPlayerPosition();   // Pozisyon sıfırlama
         }
     }
-    
-    
 
     // Oyuncunun başlangıç pozisyonuna döndür
     public void resetPlayerPosition() {
         playerLabel.setBounds(initialX, initialY, playerLabel.getWidth(), playerLabel.getHeight());
-        
+
         // PlayerMovement referansını ekleyin (World sınıfında)
         if (playerMovement != null) {
             playerMovement.resetToInitialPosition(initialX, initialY);
         }
-        
+
         playerLabel.getParent().repaint();
     }
 
@@ -67,8 +66,10 @@ public class HealthManager {
         health = 3; // Oyuncunun canını sıfırla
         resetPlayerPosition(); // Oyuncunun pozisyonunu sıfırla
         System.out.println("Game restarting...");
-        
-        // Buraya oyunun tekrar başlatılmasıyla ilgili kodları ekleyebilirsiniz
+
+        // Oyunun kapanması
+        JOptionPane.showMessageDialog(null, "Game Over!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0); // Uygulamayı tamamen kapat
     }
 
     // Oyuncunun canını öğrenmek için
@@ -79,5 +80,4 @@ public class HealthManager {
     public boolean isInvincible() {
         return invincible;
     }
-    
 }
