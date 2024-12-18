@@ -94,7 +94,7 @@ public class World {
         player.setOpaque(true);
         player.setBackground(Color.RED);
         player.setBounds(500, 500, 20, 20);
-        healthManager = new HealthManager(3, 250, 500, player);
+        healthManager = new HealthManager(3, 500, 500, player);
         levelPanel.add(player);
 
         //levelPanel.setComponentZOrder(player, 0);
@@ -168,7 +168,7 @@ public class World {
     private void checkCollisionsWithEnemies() {
         if (healthManager.getHealth() > 0) {
             Rectangle playerBounds = player.getBounds();
-    
+
             for (Enemy enemy : enemies) {
                 if (playerBounds.intersects(enemy.getLabel().getBounds())) {
                     healthManager.reduceHealth();
@@ -177,13 +177,13 @@ public class World {
             }
         }
     }
-    
+
 
     private void onPlayerCollisionWithEnemy() {
         System.out.println("Player collided with an enemy!");
         healthManager.reduceHealth(); // Sağlık azaltılır ve gerekirse oyuncu sıfırlanır
     }
-    
+
 
     public static void main(String[] args) {
         new World();

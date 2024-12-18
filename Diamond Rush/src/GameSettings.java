@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 
 public class GameSettings {
 
@@ -111,22 +113,38 @@ public class GameSettings {
         settingsPanel.add(saveButton, gbc);
 
         // Exit Butonu
-        JButton exitButton = new JButton("Exit");
-        exitButton.setBackground(new Color(70, 70, 70)); // Koyu buton arka plan
-        exitButton.setForeground(foregroundColor); // Açık metin
-        exitButton.setFocusPainted(false);
+        JButton exitButton = new JButton();
+        try {
+            // Görseli yükle
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("resources/ExitButton.jpg");
+            if (inputStream != null) {
+                ImageIcon icon = new ImageIcon(ImageIO.read(inputStream));
+                Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                exitButton.setIcon(new ImageIcon(scaledImage)); // Butona görseli ekle
+            } else {
+                System.out.println("Görsel yüklenemedi: resources/ExitButton.jpg");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        exitButton.setBorderPainted(false); // Çerçeve kaldır
+        exitButton.setContentAreaFilled(false); // Arka plan kaldır
+        exitButton.setFocusPainted(false); // Odak çizgileri kaldır
+        exitButton.setPreferredSize(new Dimension(50, 50)); // 1:1 ölçekte buton boyutu
+
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose(); // Ayarlar penceresini kapat
             }
         });
+
         gbc.gridx = 0;
         gbc.gridy = 4; // Exit butonu en alta eklenir
         gbc.gridwidth = 2; // Ortalamak için tüm sütunları kapsar
         settingsPanel.add(exitButton, gbc);
     }
-
 
     // Ayarları kaydetme işlemi
     private void saveSettings() {
