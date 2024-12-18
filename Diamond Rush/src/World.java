@@ -14,6 +14,7 @@ class GameObjectWrapper {
     }
 }
 
+//naber
 public class World {
     private JFrame frame;
     private JPanel levelPanel;
