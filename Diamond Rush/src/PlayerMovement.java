@@ -35,14 +35,14 @@ public class PlayerMovement extends KeyAdapter {
         // Hedef pozisyonu başlangıç konumuna ayarlayın
         this.targetX = initialX;
         this.targetY = initialY;
-        
+
         // Aktif tuşları temizleyin ki hareket engellensin
         activeKeys.clear();
     }
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        int unit = 10; // Hareket birimi, her adımda hareket edeceği mesafe
+        int unit = player.getWidth(); // Hareket birimi, her adımda hareket edeceği mesafe
 
         // Tuş zaten aktifse işlem yapma
         if (activeKeys.contains(keyCode)) {
@@ -108,5 +108,5 @@ public class PlayerMovement extends KeyAdapter {
 }
 
 
-    
+
 }
